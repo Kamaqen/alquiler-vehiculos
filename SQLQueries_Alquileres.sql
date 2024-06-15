@@ -91,10 +91,15 @@ DECLARE @FechaInicio DATE = '2023-01-01';
 DECLARE @FechaFin DATE = '2024-06-08';
 DECLARE @Ingresos DECIMAL(18, 2);
 
--- Llamar a la función
 SET @Ingresos = dbo.CalcularIngresosPorPeriodo(@FechaInicio, @FechaFin);
 
--- Mostrar el resultado
 SELECT @Ingresos AS IngresosTotales;
 
-    
+--Mostrar los Clientes que Han Gastado Más de un Monto Específico en Alquileres:
+DECLARE @MontoEspecifico DECIMAL(18, 2);
+SET @MontoEspecifico = 1000.00;
+
+SELECT *
+FROM dbo.ClientesQueGastaronMasQue(@MontoEspecifico)
+ORDER BY MontoTotalGastado DESC;
+
