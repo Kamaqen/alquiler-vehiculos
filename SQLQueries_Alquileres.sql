@@ -85,4 +85,16 @@ GROUP BY
     V.Marca
 ORDER BY
     NumeroAlquileres DESC
+
+--Mostrar el total de ingresos generados por los alquileres en un período de tiempo específico:
+DECLARE @FechaInicio DATE = '2023-01-01';
+DECLARE @FechaFin DATE = '2024-06-08';
+DECLARE @Ingresos DECIMAL(18, 2);
+
+-- Llamar a la función
+SET @Ingresos = dbo.CalcularIngresosPorPeriodo(@FechaInicio, @FechaFin);
+
+-- Mostrar el resultado
+SELECT @Ingresos AS IngresosTotales;
+
     
