@@ -45,22 +45,6 @@ CREATE TABLE Alquileres (
 );
 GO
 
--- FUNCIONES
-
---Mostrar el total de ingresos generados por los alquileres en un período de tiempo específico(En un rango de fechas):
-CREATE FUNCTION CalcularIngresosPorPeriodo(@FechaInicio DATE, @FechaFin DATE)
-RETURNS DECIMAL
-AS
-BEGIN
-    DECLARE @Total DECIMAL;
-
-    SELECT @Total = SUM(Total)
-    FROM Alquileres
-    WHERE FechaInicio >= @FechaInicio AND FechaFin <= @FechaFin
-
-    RETURN @Total
-END;
-
 -- CONSULTAS
 
 --Seleccionar todos los registros de la tabla de Clientes:
