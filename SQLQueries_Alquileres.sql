@@ -93,7 +93,7 @@ DECLARE @Ingresos DECIMAL(18, 2);
 
 SET @Ingresos = dbo.CalcularIngresosPorPeriodo(@FechaInicio, @FechaFin);
 
-SELECT @Ingresos AS IngresosTotales;
+SELECT @Ingresos AS IngresosTotales, @FechaInicio AS Desde, @FechaFin AS Hasta;
 
 --Mostrar los Clientes que Han Gastado Más de un Monto Específico en Alquileres:
 DECLARE @MontoEspecifico DECIMAL(18, 2);
