@@ -91,10 +91,30 @@ DECLARE @FechaInicio DATE = '2023-01-01';
 DECLARE @FechaFin DATE = '2024-06-08';
 DECLARE @Ingresos DECIMAL(18, 2);
 
--- Llamar a la función
 SET @Ingresos = dbo.CalcularIngresosPorPeriodo(@FechaInicio, @FechaFin);
 
--- Mostrar el resultado
-SELECT @Ingresos AS IngresosTotales;
+SELECT @Ingresos AS IngresosTotales, @FechaInicio AS Desde, @FechaFin AS Hasta;
 
-    
+--Mostrar los Clientes que Han Gastado Más de un Monto Específico en Alquileres:
+DECLARE @MontoEspecifico DECIMAL(18, 2);
+SET @MontoEspecifico = 1000.00;
+
+SELECT *
+FROM dbo.ClientesQueGastaronMasQue(@MontoEspecifico)
+ORDER BY MontoTotalGastado DESC;
+
+--Mostrar los Vehículos que No Han Sido Alquilados en los Últimos Seis Meses considerando la fecha actual:
+SELECT 
+    v.VehiculoID,
+    v.Modelo,
+    v.Marca
+FROM 
+    Vehiculos v
+LEFT JOIN 
+    Alquileres a ON v.VehiculoID = a.VehiculoID
+GROUP BY 
+    v.VehiculoID,
+    v.Modelo,
+    v.Marca
+HAVING 
+    MAX(a.FechaFin) IS NULL OR dbo.MesesSinAlquiler(MAX(a.FechaFin)) > 6
