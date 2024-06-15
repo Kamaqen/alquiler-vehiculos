@@ -103,3 +103,18 @@ SELECT *
 FROM dbo.ClientesQueGastaronMasQue(@MontoEspecifico)
 ORDER BY MontoTotalGastado DESC;
 
+--Mostrar los Vehículos que No Han Sido Alquilados en los Últimos Seis Meses considerando la fecha actual:
+SELECT 
+    v.VehiculoID,
+    v.Modelo,
+    v.Marca
+FROM 
+    Vehiculos v
+LEFT JOIN 
+    Alquileres a ON v.VehiculoID = a.VehiculoID
+GROUP BY 
+    v.VehiculoID,
+    v.Modelo,
+    v.Marca
+HAVING 
+    MAX(a.FechaFin) IS NULL OR dbo.MesesSinAlquiler(MAX(a.FechaFin)) > 6
